@@ -26,5 +26,3 @@ plugins:
   - jekyll-include-cache
   - jekyll-seo-tag
   - jekyll-tabs
-navigation:
-  name_over_title: true
