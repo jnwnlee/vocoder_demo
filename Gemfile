@@ -11,8 +11,8 @@ group :jekyll_plugins do
     gem 'jemoji'
     gem 'jekyll-include-cache'
     gem 'jekyll-seo-tag'
-    gem "jekyll-tabs"
-    gem "github-pages"
+    gem 'jekyll-tabs'
+    gem 'kramdown-parser-gfm'
 end
 
 gemspec
