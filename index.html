@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+
+    
+    <meta charset="UTF-8">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Mimicking Vocal Tracks by Implementing and Applying Vocoder Effect | Junwon Lee, Yoonjin Chung</title>
+<meta name="generator" content="Jekyll v3.9.2" />
+<meta property="og:title" content="Mimicking Vocal Tracks by Implementing and Applying Vocoder Effect" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Junwon Lee, Yoonjin Chung" />
+<meta property="og:description" content="Junwon Lee, Yoonjin Chung" />
+<link rel="canonical" href="https://yoonjinxd.github.io/vocoder_demo/" />
+<meta property="og:url" content="https://yoonjinxd.github.io/vocoder_demo/" />
+<meta property="og:site_name" content="Mimicking Vocal Tracks by Implementing and Applying Vocoder Effect" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Mimicking Vocal Tracks by Implementing and Applying Vocoder Effect" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","description":"Junwon Lee, Yoonjin Chung","headline":"Mimicking Vocal Tracks by Implementing and Applying Vocoder Effect","name":"Mimicking Vocal Tracks by Implementing and Applying Vocoder Effect","url":"https://yoonjinxd.github.io/vocoder_demo/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#fff">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/vocoder_demo/assets/css/style.css?v=">
+    <link rel="stylesheet" href="/assets/css/custom.css">
+    
+      <link rel="stylesheet" href="https://stylishthemes.github.io/Syntax-Themes/pygments/css-github/pygments-monokai.css">
+    
+  </head>
+  <body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner">
+      <h1 class="project-name">Mimicking Vocal Tracks by Implementing and Applying Vocoder Effect</h1>
+      <h2 class="project-tagline">Junwon Lee, Yoonjin Chung</h2>
+      
+      
+    </header>
+
+    <main id="content" class="main-content" role="main">
+      <p>Introduction</p>
+
+<h2 id="vocoder-implementation">Vocoder Implementation</h2>
+
+<p>Method Explanation &amp; Figure</p>
+
+<h2 id="result-samples">Result Samples</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Modulator</th>
+      <th>Carrier</th>
+      <th>Vocoded Result</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><audio src="public/audios/sources/suzanne.wav" controls=""></audio></td>
+      <td><audio src="public/audios/carriers/sawtooth.wav" controls=""></audio></td>
+      <td><audio src="public/audios/results/suzanne_result.wav" controls=""></audio></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="controllable-parameters">Controllable Parameters</h3>
+
+<ul class="tab" data-tab="dd85df07-f592-460a-9d5e-655548754037" data-name="parameters">
+  
+      <li class="active">
+          <a href="#">F0 </a>
+      </li>
+  
+      <li>
+          <a href="#">f Bands </a>
+      </li>
+  
+      <li>
+          <a href="#">F Scale </a>
+      </li>
+  
+      <li>
+          <a href="#">Noise </a>
+      </li>
+  
+      <li>
+          <a href="#">Formant </a>
+      </li>
+  
+      <li>
+          <a href="#">Compressor </a>
+      </li>
+  
+      <li>
+          <a href="#">Expander </a>
+      </li>
+  
+</ul>
+<ul class="tab-content" id="dd85df07-f592-460a-9d5e-655548754037" data-name="parameters">
+  
+      <li class="active">
+<p>설명</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">f0=220</th>
+      <th style="text-align: center">f0=440</th>
+      <th style="text-align: center">f0=880</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><audio src="public/audios/results/f0/suzanne_220.wav" controls=""></audio></td>
+      <td style="text-align: center"><audio src="public/audios/results/f0/suzanne_440.wav" controls=""></audio></td>
+      <td style="text-align: center"><audio src="public/audios/results/f0/suzanne_880.wav" controls=""></audio></td>
+    </tr>
+  </tbody>
+</table>
+</li>
+  
+      <li>
+<p>Frequency Band 설명</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">band_num=10</th>
+      <th style="text-align: center">band_num=60</th>
+      <th style="text-align: center">band_num=120</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><audio src="public/audios/results/freq_band/suzanne_10.wav" controls=""></audio></td>
+      <td style="text-align: center"><audio src="public/audios/results/freq_band/suzanne_60.wav" controls=""></audio></td>
+      <td style="text-align: center"><audio src="public/audios/results/freq_band/suzanne_120.wav" controls=""></audio></td>
+    </tr>
+  </tbody>
+</table>
+</li>
+  
+      <li>
+<p>Frequency Scale 설명</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Linear Spectrogram</th>
+      <th style="text-align: center">Mel Spectrogram</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><audio src="public/audios/results/freq_scale/suzanne_linear.wav" controls=""></audio></td>
+      <td style="text-align: center"><audio src="public/audios/results/freq_scale/suzanne_mel.wav" controls=""></audio></td>
+    </tr>
+  </tbody>
+</table>
+</li>
+  
+      <li>
+<p>설명</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">without Noise</th>
+      <th style="text-align: center">amp=0.5, Q=1</th>
+      <th style="text-align: center">amp=0.7, Q=3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><audio src="public/audios/results/noise/suzanne_basic.wav" controls=""></audio></td>
+      <td style="text-align: center"><audio src="public/audios/results/noise/suzanne_amp0.5_Q1.wav" controls=""></audio></td>
+      <td style="text-align: center"><audio src="public/audios/results/noise/suzanne_amp0.7_Q3.wav" controls=""></audio></td>
+    </tr>
+  </tbody>
+</table>
+</li>
+  
+      <li>
+<p>설명</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">shift=0</th>
+      <th style="text-align: center">shift=-1</th>
+      <th style="text-align: center">shift=2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><audio src="public/audios/results/formant_shift/suzanne_0.wav" controls=""></audio></td>
+      <td style="text-align: center"><audio src="public/audios/results/formant_shift/suzanne_-1.wav" controls=""></audio></td>
+      <td style="text-align: center"><audio src="public/audios/results/formant_shift/suzanne_2.wav" controls=""></audio></td>
+    </tr>
+  </tbody>
+</table>
+</li>
+  
+      <li>
+<p>설명</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">without Compressor</th>
+      <th style="text-align: center">with Compressor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><audio src="public/audios/results/comp&amp;expd/suzanne_basic.wav" controls=""></audio></td>
+      <td style="text-align: center"><audio src="public/audios/results/freq_scale/suzanne_comp.wav" controls=""></audio></td>
+    </tr>
+  </tbody>
+</table>
+</li>
+  
+      <li>
+<p>설명</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">without Expander</th>
+      <th style="text-align: center">with Expander</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><audio src="public/audios/results/comp&amp;expd/suzanne_basic.wav" controls=""></audio></td>
+      <td style="text-align: center"><audio src="public/audios/results/freq_scale/suzanne_expd.wav" controls=""></audio></td>
+    </tr>
+  </tbody>
+</table>
+</li>
+  
+</ul>
+
+<h3 id="various-carrier-samples">Various Carrier Samples</h3>
+
+<h4 id="1-suzanne">1. Suzanne</h4>
+
+<audio src="public/audios/sources/suzanne.wav" controls=""></audio>
+
+<table>
+    <tr>
+        <th></th>
+        <th>Carrier</th>
+        <th>Vocoded Result</th>
+    </tr>
+    <tr>
+        <td>Incremental Sawtooth</td>
+        <td><audio src="public/audios/carriers/exp_sawtooth.wav" controls=""></audio></td>
+        <td><audio src="public/audios/results/carriers/suzanne_exp_sawtooth.wav" controls=""></audio></td>
+    </tr>
+    <tr>
+        <td>Orchestra</td>
+        <td><audio src="public/audios/carriers/orchestra.wav" controls=""></audio></td>
+        <td><audio src="public/audios/results/carriers/suzanne_orchestra.wav" controls=""></audio></td>
+    </tr>
+    <tr>
+        <td>Pad Chord</td>
+        <td><audio src="public/audios/carriers/pad_chord.wav" controls=""></audio></td>
+        <td><audio src="public/audios/results/carriers/suzanne_pad_chord.wav" controls=""></audio></td>
+    </tr>
+    <tr>
+        <td>Wind</td>
+        <td><audio src="public/audios/carriers/wind.wav" controls=""></audio></td>
+        <td><audio src="public/audios/results/carriers/suzanne_wind.wav" controls=""></audio></td>
+    </tr>
+</table>
+
+<h4 id="2-dog-sound">2. Dog Sound</h4>
+<audio src="public/audios/sources/dog_sound.wav" controls=""></audio>
+
+<table>
+    <tr>
+        <th></th>
+        <th>Carrier</th>
+        <th>Vocoded Result</th>
+    </tr>
+    <tr>
+        <td>Harp</td>
+        <td><audio src="public/audios/carriers/harp.wav" controls=""></audio></td>
+        <td><audio src="public/audios/results/carriers/dog_sound_harp.wav" controls=""></audio></td>
+    </tr>
+    <tr>
+        <td>School Bell</td>
+        <td><audio src="public/audios/carriers/school_bell.wav" controls=""></audio></td>
+        <td><audio src="public/audios/results/carriers/dog_sound_school_bell.wav" controls=""></audio></td>
+    </tr>
+    <tr>
+        <td>Synth</td>
+        <td><audio src="public/audios/carriers/synth.wav" controls=""></audio></td>
+        <td><audio src="public/audios/results/carriers/dog_sound_synth.wav" controls=""></audio></td>
+    </tr>
+    <tr>
+        <td>Whale</td>
+        <td><audio src="public/audios/carriers/whale.wav" controls=""></audio></td>
+        <td><audio src="public/audios/results/carriers/dog_sound_whale.wav" controls=""></audio></td>
+    </tr>
+    <tr>
+        <td>Meow</td>
+        <td><audio src="public/audios/carriers/meow.wav" controls=""></audio></td>
+        <td><audio src="public/audios/results/carriers/dog_sound_meow.wav" controls=""></audio></td>
+    </tr>
+    <tr>
+        <td>Starwars</td>
+        <td><audio src="public/audios/carriers/starwars.wav" controls=""></audio></td>
+        <td><audio src="public/audios/results/carriers/dog_sound_starwars.wav" controls=""></audio></td>
+    </tr>
+    <tr>
+        <td>Trumpet</td>
+        <td><audio src="public/audios/carriers/trumpet.wav" controls=""></audio></td>
+        <td><audio src="public/audios/results/carriers/dog_sound_trumpet.wav" controls=""></audio></td>
+    </tr>
+</table>
+
+<h2 id="mimicking-artists">Mimicking Artists</h2>
+
+<p>아티스트별</p>
+
+
+
+      <footer class="site-footer">
+        
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </main>
+
+    <script>
+      Array.from(
+        document.querySelectorAll('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]')
+      ).forEach(h => {
+        h.addEventListener('click', e => {
+          window.location.hash = e.target.getAttribute('id');
+        });
+      })
+    </script>
+    <script src="/assets/js/tabs.js"></script>
+  </body>
+</html>
