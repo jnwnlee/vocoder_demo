@@ -3,7 +3,7 @@ description: Junwon Lee, Yoonjin Chung
 url: https://yoonjinxd.github.io/vocoder_demo
 show_downloads: false
 darkmode: false
-remote_theme: pages-themes/cayman@v0.2.0
+remote_theme: tuur29/pages-themes-cayman
 color:
   gradient_left: "#135FD2"
   gradient_right: "#5FAAFA"
@@ -27,3 +27,4 @@ plugins:
   - jekyll-include-cache
   - jekyll-seo-tag
   - jekyll-tabs
+  - jekyll-remote-theme
