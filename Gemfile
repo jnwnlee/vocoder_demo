@@ -12,6 +12,7 @@ group :jekyll_plugins do
     gem 'jekyll-include-cache'
     gem 'jekyll-seo-tag'
     gem "jekyll-tabs"
+    gem "github-pages"
 end
 
 gemspec
