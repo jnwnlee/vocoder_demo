@@ -2,122 +2,187 @@
 layout: default
 ---
 
-Text can be **bold**, _italic_, or ~~strikethrough~~.
-
-[Link to another page](./another-page.html).
-
-There should be whitespace between paragraphs.
-
-There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
-
-# Header 1
-
-This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
-
-## Header 2
-
-> This is a blockquote following a header.
->
-> When something is important enough, you do it even if the odds are not in your favor.
-
-### Header 3
-
-```js
-// Javascript code with syntax highlighting.
-var fun = function lang(l) {
-  dateformat.i18n = require('./lang/' + l)
-  return true;
-}
-```
-
-```ruby
-# Ruby code with syntax highlighting
-GitHubPages::Dependencies.gems.each do |gem, version|
-  s.add_dependency(gem, "= #{version}")
-end
-```
-
-#### Header 4
-
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-
-##### Header 5
-
-1.  This is an ordered list following a header.
-2.  This is an ordered list following a header.
-3.  This is an ordered list following a header.
-
-###### Header 6
-
-| head1        | head two          | three |
-|:-------------|:------------------|:------|
-| ok           | good swedish fish | nice  |
-| out of stock | good and plenty   | nice  |
-| ok           | good `oreos`      | hmm   |
-| ok           | good `zoute` drop | yumm  |
-
-### There's a horizontal rule below this.
-
-* * *
-
-### Here is an unordered list:
-
-*   Item foo
-*   Item bar
-*   Item baz
-*   Item zip
-
-### And an ordered list:
-
-1.  Item one
-1.  Item two
-1.  Item three
-1.  Item four
-
-### And a nested list:
-
-- level 1 item
-  - level 2 item
-  - level 2 item
-    - level 3 item
-    - level 3 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-
-### Small image
-
-![Octocat](https://github.githubassets.com/images/icons/emoji/octocat.png)
-
-### Large image
-
-![Branching](https://guides.github.com/activities/hello-world/branching.png)
+Introduction
 
 
-### Definition lists can be used with HTML syntax.
+## Vocoder Implementation
 
-<dl>
-<dt>Name</dt>
-<dd>Godzilla</dd>
-<dt>Born</dt>
-<dd>1952</dd>
-<dt>Birthplace</dt>
-<dd>Japan</dd>
-<dt>Color</dt>
-<dd>Green</dd>
-</dl>
+Method Explanation & Figure
 
-```
-Long, single-line code blocks should not wrap. They should horizontally scroll if they are too long. This line should be long enough to demonstrate this.
-```
 
-```
-The final element.
-```
+## Result Samples
+
+|Modulator|Carrier|Vocoded Result|
+|---|---|---|
+|<audio src="public/audios/sources/suzanne.wav" controls></audio>|<audio src="public/audios/carriers/sawtooth.wav" controls></audio>|<audio src="public/audios/results/suzanne_result.wav" controls></audio>|
+
+
+### Controllable Parameters
+
+{% tabs parameters %}
+
+{% tab parameters F0 %}
+
+설명
+
+|f0=220|f0=440|f0=880|
+|:---:|:---:|:---:|
+|<audio src="public/audios/results/f0/suzanne_220.wav" controls></audio>|<audio src="public/audios/results/f0/suzanne_440.wav" controls></audio>|<audio src="public/audios/results/f0/suzanne_880.wav" controls></audio>|
+{% endtab %}
+
+
+{% tab parameters f Bands %}
+
+Frequency Band 설명
+
+
+|band_num=10|band_num=60|band_num=120|
+|:---:|:---:|:---:|
+|<audio src="public/audios/results/freq_band/suzanne_10.wav" controls></audio>|<audio src="public/audios/results/freq_band/suzanne_60.wav" controls></audio>|<audio src="public/audios/results/freq_band/suzanne_120.wav" controls></audio>|
+{% endtab %}
+
+
+{% tab parameters F Scale %}
+
+Frequency Scale 설명
+
+
+|Linear Spectrogram|Mel Spectrogram|
+|:---:|:---:|
+|<audio src="public/audios/results/freq_scale/suzanne_linear.wav" controls></audio>|<audio src="public/audios/results/freq_scale/suzanne_mel.wav" controls></audio>|
+{% endtab %}
+
+
+{% tab parameters Noise %}
+
+설명
+
+
+|without Noise|amp=0.5, Q=1|amp=0.7, Q=3|
+|:---:|:---:|:---:|
+|<audio src="public/audios/results/noise/suzanne_basic.wav" controls></audio>|<audio src="public/audios/results/noise/suzanne_amp0.5_Q1.wav" controls></audio>|<audio src="public/audios/results/noise/suzanne_amp0.7_Q3.wav" controls></audio>|
+{% endtab %}
+
+
+{% tab parameters Formant %}
+
+설명
+
+|shift=0|shift=-1|shift=2|
+|:---:|:---:|:---:|
+|<audio src="public/audios/results/formant_shift/suzanne_0.wav" controls></audio>|<audio src="public/audios/results/formant_shift/suzanne_-1.wav" controls></audio>|<audio src="public/audios/results/formant_shift/suzanne_2.wav" controls></audio>|
+{% endtab %}
+
+
+{% tab parameters Compressor %}
+
+설명
+
+|without Compressor|with Compressor|
+|:---:|:---:|
+|<audio src="public/audios/results/comp&expd/suzanne_basic.wav" controls></audio>|<audio src="public/audios/results/freq_scale/suzanne_comp.wav" controls></audio>|
+{% endtab %}
+
+
+{% tab parameters Expander %}
+
+설명
+
+|without Expander|with Expander|
+|:---:|:---:|
+|<audio src="public/audios/results/comp&expd/suzanne_basic.wav" controls></audio>|<audio src="public/audios/results/freq_scale/suzanne_expd.wav" controls></audio>|
+{% endtab %}
+
+
+{% endtabs %}
+
+
+### Various Carrier Samples
+
+#### 1. Suzanne
+
+<audio src="public/audios/sources/suzanne.wav" controls></audio>
+
+
+<table>
+    <tr>
+        <th></th>
+        <th>Carrier</th>
+        <th>Vocoded Result</th>
+    </tr>
+    <tr>
+        <td>Incremental Sawtooth</td>
+        <td><audio src="public/audios/carriers/exp_sawtooth.wav" controls></audio></td>
+        <td><audio src="public/audios/results/carriers/suzanne_exp_sawtooth.wav" controls></audio></td>
+    </tr>
+    <tr>
+        <td>Orchestra</td>
+        <td><audio src="public/audios/carriers/orchestra.wav" controls></audio></td>
+        <td><audio src="public/audios/results/carriers/suzanne_orchestra.wav" controls></audio></td>
+    </tr>
+    <tr>
+        <td>Pad Chord</td>
+        <td><audio src="public/audios/carriers/pad_chord.wav" controls></audio></td>
+        <td><audio src="public/audios/results/carriers/suzanne_pad_chord.wav" controls></audio></td>
+    </tr>
+    <tr>
+        <td>Wind</td>
+        <td><audio src="public/audios/carriers/wind.wav" controls></audio></td>
+        <td><audio src="public/audios/results/carriers/suzanne_wind.wav" controls></audio></td>
+    </tr>
+</table>
+
+
+#### 2. Dog Sound
+<audio src="public/audios/sources/dog_sound.wav" controls></audio>
+
+
+<table>
+    <tr>
+        <th></th>
+        <th>Carrier</th>
+        <th>Vocoded Result</th>
+    </tr>
+    <tr>
+        <td>Harp</td>
+        <td><audio src="public/audios/carriers/harp.wav" controls></audio></td>
+        <td><audio src="public/audios/results/carriers/dog_sound_harp.wav" controls></audio></td>
+    </tr>
+    <tr>
+        <td>School Bell</td>
+        <td><audio src="public/audios/carriers/school_bell.wav" controls></audio></td>
+        <td><audio src="public/audios/results/carriers/dog_sound_school_bell.wav" controls></audio></td>
+    </tr>
+    <tr>
+        <td>Synth</td>
+        <td><audio src="public/audios/carriers/synth.wav" controls></audio></td>
+        <td><audio src="public/audios/results/carriers/dog_sound_synth.wav" controls></audio></td>
+    </tr>
+    <tr>
+        <td>Whale</td>
+        <td><audio src="public/audios/carriers/whale.wav" controls></audio></td>
+        <td><audio src="public/audios/results/carriers/dog_sound_whale.wav" controls></audio></td>
+    </tr>
+    <tr>
+        <td>Meow</td>
+        <td><audio src="public/audios/carriers/meow.wav" controls></audio></td>
+        <td><audio src="public/audios/results/carriers/dog_sound_meow.wav" controls></audio></td>
+    </tr>
+    <tr>
+        <td>Starwars</td>
+        <td><audio src="public/audios/carriers/starwars.wav" controls></audio></td>
+        <td><audio src="public/audios/results/carriers/dog_sound_starwars.wav" controls></audio></td>
+    </tr>
+    <tr>
+        <td>Trumpet</td>
+        <td><audio src="public/audios/carriers/trumpet.wav" controls></audio></td>
+        <td><audio src="public/audios/results/carriers/dog_sound_trumpet.wav" controls></audio></td>
+    </tr>
+</table>
+
+## Mimicking Artists
+
+아티스트별
+
+
+
