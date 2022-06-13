@@ -2,14 +2,16 @@
 
 source 'https://rubygems.org'
 gem "jekyll"
-gem "jekyll-paginate"
-gem 'jekyll-sitemap'
-gem 'jekyll-gist'
-gem 'jekyll-feed'
-gem 'jemoji'
-gem 'jekyll-include-cache'
-gem 'jekyll-seo-tag'
 gem "webrick", "~> 1.7"
-gem "jekyll-tabs"
+group :jekyll_plugins do
+    gem "jekyll-paginate"
+    gem 'jekyll-sitemap'
+    gem 'jekyll-gist'
+    gem 'jekyll-feed'
+    gem 'jemoji'
+    gem 'jekyll-include-cache'
+    gem 'jekyll-seo-tag'
+    gem "jekyll-tabs"
+end
 
 gemspec
