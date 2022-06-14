@@ -67,9 +67,37 @@ As a result, we can retrieve a modified carrier signal that has the same envelop
 
 ## Result Samples
 
-| Modulator                                                        | Carrier                                                            | Vocoded Result                                                          |
-| ---------------------------------------------------------------- | ------------------------------------------------------------------ | ----------------------------------------------------------------------- |
-| <audio src="public/audios/sources/wow.wav" controls></audio> | <audio src="public/audios/carriers/sawtooth.wav" controls></audio> | <audio src="public/audios/results/wow_basic.wav" controls></audio> |
+
+<table>
+    <tr>
+        <th>Modulator</th>
+        <th>Carrier</th>
+        <th>Vocoded Result</th>
+    </tr>
+    <tr>
+        <td rowspan="5"><audio src="public/audios/sources/wow.wav" controls></audio></td>
+        <td><audio src="public/audios/carriers/sawtooth.wav" controls></audio></td>
+        <td><audio src="public/audios/results/wow_basic.wav" controls></audio></td>
+    </tr>
+    <tr>
+        <td><audio src="public/audios/carriers/exp_sawtooth.wav" controls></audio></td>
+        <td><audio src="public/audios/results/wow_exp_sawtooth.wav" controls></audio></td>
+    </tr>
+    <tr>
+        <td><audio src="public/audios/carriers/orchestra.wav" controls></audio></td>
+        <td><audio src="public/audios/results/wow_orchestra.wav" controls></audio></td>
+    </tr>
+    <tr>
+        <td><audio src="public/audios/carriers/pad_chord.wav" controls></audio></td>
+        <td><audio src="public/audios/results/wow_pad_chord.wav" controls></audio></td>
+    </tr>
+    <tr>
+        <td><audio src="public/audios/carriers/wind.wav" controls></audio></td>
+        <td><audio src="public/audios/results/wow_wind.wav" controls></audio></td>
+    </tr>
+</table>
+
+
 
 <br>
 
