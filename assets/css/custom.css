@@ -6,6 +6,17 @@ span {
     vertical-align: middle;
 }
 
+img + em {
+    display: block;
+    text-align: center;
+    font-size: .9rem;
+    color: grey;
+}
+
+img {
+    border-radius: 5%;
+}
+
 .tab {
     display: flex;
     flex-wrap: wrap;
@@ -54,3 +65,4 @@ span {
 .tab-content li.active {
     display: initial;
 }
+

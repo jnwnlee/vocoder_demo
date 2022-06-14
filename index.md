@@ -3,21 +3,19 @@ layout: default
 ---
 
 
-Demo for the final project of *KAIST GCT535 Spring 2022 Sound Technology for Multimedia*.
+Demo for the final project of _[GCT535 Spring 2022 Sound Technology for Multimedia, KAIST](https://mac.kaist.ac.kr/~juhan/gct535/index.html)_.
 
 We constructed our own **Vocoder Effect and related parameters to mimick several iconic vocoder-effected vocal tracks** which are Daftpunk, Zedd and Stevie Wonder.
 
 
 
-- First, we implemented a [classic channel vocoder](TODO: link!) using band-pass filters and RMS filters.
+- First, we implemented a classic channel vocoder using band-pass filters and RMS filters.
 
-- Second, we implemented and compared controllable parameters include 
-[F0](https://en.wikipedia.org/wiki/Fundamental_frequency), 
-Number of Frequency Bands, Frequency Scale, Random Noising, Formant Shifting and Ratio between modulator and carrier. 
-We also implemented compressor and expander to improve the effector sound. (TODO: 여기 가독성 구림)
+- Second, we implemented and compared controllable parameters including F0, Number of Frequency Bands, Frequency Scale, Random Noising, Formant Shifting and Ratio between modulator and carrier. 
+  We also implemented compressor and expander to improve the effector sound.
 
-- Finally, we mimicked the target artists using the our implemented vocoder and its parameters.
-We also generated interesting results with various type of carrier sounds.
+- Finally, we mimicked the target artists using our implemented vocoder and its parameters.
+  We also generated interesting results with various types of carrier sounds.
 
 You can check [implementation detail](#vocoder-implementation) and [result samples](#result-samples) below.
 
@@ -39,21 +37,39 @@ MathJax = {
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
 </script>
 
-![Implementation of Vocoder](public/images/vocoder.png "Figure.1 Implementation of Vocoder")
-Vocoder takes two different signals, carrier $car$ and modulator $mod$, as inputs and outputs one result signal $output$.  
-Let the number of frequency bands $N$, the number of time samples $T$.  
-Each bandpass filter $bandpass_i, i\in [1, N]$ corresponding to a single frequency band has passband $[f_{i-1}, f_i]$.  
-The output signal is retreived as the following: $$output_t=ISTFT(\Sigma_{i\in [1, N]}{RMS(bandpass_i(mod_t))\times bandpass_i(STFT(car)_t)}), t\in[0, T]$$.  
-RMS and STFT is calculated in a same hop length.
+<br>
 
-As a result, we can retreive a modified carrier signal that has the same envelope with modulator signal in frequency domain over time which reflects the formant characteristics of the modulator.  
-!!!!!!!! TODO: Spectrogram example (carrier, modulator, result) !!!!!!!!
+<p>
+    <img src="public/images/vocoder.png" alt>
+    <em>Figure.1 Implementation of Vocoder</em>
+</p>
+
+<br>
+
+A vocoder takes two different signals, carrier $car$ and modulator $mod$, as inputs and outputs one result signal $output$. Let the number of frequency bands $N$, the number of time samples $T$.
+  
+Each bandpass filter $bandpass_i, i\in [1, N]$ corresponding to a single frequency band has passband $[f_{i-1}, f_i]$. 
+The output signal is retrieved as the following: 
+
+$$output_t=ISTFT(\Sigma_{i\in [1, N]}{RMS(bandpass_i(mod_t))\times bandpass_i(STFT(car)_t)}), t\in[0, T]$$.  
+
+
+RMS and STFT are calculated in the same hop length.
+
+As a result, we can retrieve a modified carrier signal that has the same envelope as the modulator signal in the frequency domain over time which reflects the formant characteristics of the modulator.  
+
+
+<p>
+    <img src="public/images/compare_stft.png" alt>
+    <em>Figure.2 Comparison between original STFT and vocoded STFT</em>
+</p>
+
 
 ## Result Samples
 
 | Modulator                                                        | Carrier                                                            | Vocoded Result                                                          |
 | ---------------------------------------------------------------- | ------------------------------------------------------------------ | ----------------------------------------------------------------------- |
-| <audio src="public/audios/sources/suzanne.wav" controls></audio> | <audio src="public/audios/carriers/sawtooth.wav" controls></audio> | <audio src="public/audios/results/suzanne_result.wav" controls></audio> |
+| <audio src="public/audios/sources/wow.wav" controls></audio> | <audio src="public/audios/carriers/sawtooth.wav" controls></audio> | <audio src="public/audios/results/wow_basic.wav" controls></audio> |
 
 <br>
 
@@ -66,8 +82,8 @@ As a result, we can retreive a modified carrier signal that has the same envelop
 
 {% tab parameters F0 %}
 
-The fundamental frequency, often referred to simply as F0, is the lowest frequency of a periodic signal. In music, pitch is the fundamental frequency of a note
-Since the carrier sound has only charge with the harmonic, the result's pitch is controlled by F0 value of the carrier signal.
+The **fundamental frequency**, often referred to simply as F0, is the lowest frequency of a periodic signal. In music, the pitch is the fundamental frequency of a note.
+Since the carrier sound is solely in charge of the harmonic, the result's pitch is controlled by the F0 value of the carrier signal.
 
 |                                 f0=220                                  |                                 f0=440                                  |                                 f0=880                                  |
 | :---------------------------------------------------------------------: | :---------------------------------------------------------------------: | :---------------------------------------------------------------------: |
@@ -77,9 +93,9 @@ Since the carrier sound has only charge with the harmonic, the result's pitch is
 
 {% tab parameters f Bands %}
 
-f Bands refers to the number of frequency bands into which the modulator signal is split. 
-The bigger number of f Bands means the smaller range of band-pass filters, vice versa. 
-You can think of this number as a resoultion of the modulator's formant.
+**F Bands** refers to the number of frequency bands into which the modulator signal is split. 
+The larger number of F Bands means the smaller range of band-pass filters, vice versa. 
+You can think of this number as a resolution of the modulator's formant.
 Check the samples focusing on the formant(vowels) resolution.
 
 |                                  band_num=10                                  |                                  band_num=60                                  |                                  band_num=120                                  |
@@ -90,7 +106,7 @@ Check the samples focusing on the formant(vowels) resolution.
 
 {% tab parameters Scale %}
 
-While dividing equal-width Frequency Bands, either linear or mel(log) scale can be applied on frequency axis.  
+Different **Scales**, such as linear or mel(log), can be applied on frequency axis when dividing equal-width Frequency Bands.
 It determines the range of each frequency band, which is important to human pitch perception and formant shift.
 
 |                                 Linear Spectrogram                                 |                                 Mel Spectrogram                                 |
@@ -101,10 +117,12 @@ It determines the range of each frequency band, which is important to human pitc
 
 {% tab parameters Noise %}
 
-To highlight sibilant sounds (e.g. _s, sh, t, ch, chh_, etc.), high frequency random noise can be added to the carrier signal.
-As these sounds do not have particular pitch, adding frequency components around 8kHz to 16kHz may help them to stand out.  
-For implementation, we generated a random white noise and applied bi-quad high-pass filter.
-_amp_ is the amplitude of noise. _Q_ is the Q value of bi-quad filter.
+
+To highlight sibilant sounds (e.g. _s, sh, t, ch, chh_, etc.), high-frequency **Noise** can be added to the carrier signal.
+As these sounds do not have a particular pitch, adding frequency components around 8kHz to 16kHz may help them to stand out.  
+For implementation, we generated a random white noise and applied a bi-quad high-pass filter.
+_amp_ is the amplitude of the noise. _Q_ is the Q value of the bi-quad filter.
+
 
 |                                without Noise                                 |                                   amp=0.5, Q=1                                   |                                   amp=0.7, Q=3                                   |
 | :--------------------------------------------------------------------------: | :------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
@@ -114,10 +132,10 @@ _amp_ is the amplitude of noise. _Q_ is the Q value of bi-quad filter.
 
 {% tab parameters Formant %}
 
-Formant-shifting is achieved by shifting the multiplication between the frequency band channels from modulator and carrier. 
+**Formant-shifting** is achieved by shifting the multiplication between the frequency band channels from modulator and carrier. 
 If the shift step is 1, the modulator channel n would be mapped to the carrier channel n+1.
-Note that formant does not related to the pitch or frequency of the signal, but rather the timbre and spectrum peaks. 
-Each formant corresponds to a resonance in the vocal tract and are prominent in vowels.
+Note that formant does not relate to the pitch or frequency of the signal, but rather the timbre and spectrum peaks. 
+Each formant corresponds to a resonance in the vocal tract and is prominent in vowels.
 
 |                                     shift=0                                      |                                     shift=-1                                      |                                     shift=2                                      |
 | :------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
@@ -127,7 +145,7 @@ Each formant corresponds to a resonance in the vocal tract and are prominent in 
 
 {% tab parameters Compressor %}
 
-Compressor attenuates the given sound above threshold (dB) with a certain ratio (>1) while maintaining the maximum amplitude level (dB).
+**Compressor** attenuates the given sound above threshold (dB) with a certain ratio (>1) while maintaining the maximum amplitude level (dB).
 It reduces the dynamic range without clipping.  
 Applying the effector before vocoder softens the dynamic change in formant.
 
@@ -139,7 +157,7 @@ Applying the effector before vocoder softens the dynamic change in formant.
 
 {% tab parameters Expander %}
 
-Expander, in contrast to compressor, attenuates the given sound below threshold (dB) with a certain ratio (>1).
+**Expander**, in contrast to compressor, attenuates the given sound below threshold (dB) with a certain ratio (>1).
 It can reduce unnecessary noise.
 
 |                                 without Expander                                 |                                  with Expander                                   |
@@ -151,7 +169,7 @@ It can reduce unnecessary noise.
 
 {% tab parameters Ratio %}
 
-**Ratio** refers to the ratio between modulator and carrier signal as follows: $modulator^ratio * carrier$
+**Ratio** refers to the ratio between modulator and carrier signal as follows: ${modulator}^{ratio} * carrier$
 The smaller ratio means the weaker modulator signal and vice versa.
 
 |                                ratio=0.3                                     |                                   ratio=0.7                                      |                                   ratio=1.2                                      |
@@ -252,6 +270,58 @@ The smaller ratio means the weaker modulator signal and vice versa.
 <br>
 
 
-## Mimicking Artists
+## Let's Mimick Some Artists!
 
-아티스트별
+#### 1. Daftpunk - Harder, Better, Faster, Stronger
+
+<table>
+    <tr>
+        <td rowspan="3"><img src="public/images/daftpunk.jpeg" width="250px"/></td>
+        <td>Target</td>
+        <td><audio src="public/audios/results/artist/daftpunk.mp3" controls></audio></td>
+    </tr>
+    <tr>
+        <td>Our Voice</td>
+        <td><audio src="public/audios/results/artist/daftpunk_vocal.wav" controls></audio></td>
+    </tr>
+    <tr>
+        <td>Mimicked Result</td>
+        <td><audio src="public/audios/results/artist/daftpunk_result+mr.wav" controls></audio></td>
+    </tr>
+</table>
+
+#### 2. Zedd - Stay
+
+<table>
+    <tr>
+        <td rowspan="3"><img src="public/images/zedd.jpg" width="250px"/></td>
+        <td>Target</td>
+        <td><audio src="public/audios/results/artist/zedd.mp3" controls></audio></td>
+    </tr>
+    <tr>
+        <td>Our Voice</td>
+        <td><audio src="public/audios/results/artist/zedd_vocal.wav" controls></audio></td>
+    </tr>
+    <tr>
+        <td>Mimicked Result</td>
+        <td><audio src="public/audios/results/artist/zedd_result+mr.wav" controls></audio></td>
+    </tr>
+</table>
+
+#### 3. Stevie Wonder - Close to you
+
+<table>
+    <tr>
+        <td rowspan="3"><img src="public/images/closetoyou.jpeg" width="250px"/></td>
+        <td>Target</td>
+        <td><audio src="public/audios/results/artist/Closetoyou.wav" controls></audio></td>
+    </tr>
+    <tr>
+        <td>Our Voice</td>
+        <td><audio src="public/audios/results/artist/Closetoyou_vocal.wav" controls></audio></td>
+    </tr>
+    <tr>
+        <td>Mimicked Result</td>
+        <td><audio src="public/audios/results/artist/Closetoyou_result+mr.wav" controls></audio></td>
+    </tr>
+</table>
