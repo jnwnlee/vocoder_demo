@@ -9,15 +9,15 @@ We constructed our own **Vocoder Effect and related parameters to mimick several
 
 
 
-First, we implemented a [classic channel vocoder](TODO: link!) using band-pass filters and RMS filters.
+- First, we implemented a [classic channel vocoder](TODO: link!) using band-pass filters and RMS filters.
 
-Second, we implemented and compared controllable parameters include 
+- Second, we implemented and compared controllable parameters include 
 [F0](https://en.wikipedia.org/wiki/Fundamental_frequency), 
 Number of Frequency Bands, Frequency Scale, Random Noising, Formant Shifting and Ratio between modulator and carrier. 
 We also implemented compressor and expander to improve the effector sound. (TODO: 여기 가독성 구림)
 
-Finally, we mimicked the target artists using the our implemented vocoder and its parameters.
-Additionally, we checked interesting results with various type of carrier sounds.
+- Finally, we mimicked the target artists using the our implemented vocoder and its parameters.
+We also generated interesting results with various type of carrier sounds.
 
 You can check [implementation detail](#vocoder-implementation) and [result samples](#result-samples) below.
 
@@ -77,7 +77,10 @@ Since the carrier sound has only charge with the harmonic, the result's pitch is
 
 {% tab parameters f Bands %}
 
-Frequency Band 설명
+f Bands refers to the number of frequency bands into which the modulator signal is split. 
+The bigger number of f Bands means the smaller range of band-pass filters, vice versa. 
+You can think of this number as a resoultion of the modulator's formant.
+Check the samples focusing on the formant(vowels) resolution.
 
 |                                  band_num=10                                  |                                  band_num=60                                  |                                  band_num=120                                  |
 | :---------------------------------------------------------------------------: | :---------------------------------------------------------------------------: | :----------------------------------------------------------------------------: |
@@ -111,7 +114,10 @@ _amp_ is the amplitude of noise. _Q_ is the Q value of bi-quad filter.
 
 {% tab parameters Formant %}
 
-설명
+Formant-shifting is achieved by shifting the multiplication between the frequency band channels from modulator and carrier. 
+If the shift step is 1, the modulator channel n would be mapped to the carrier channel n+1.
+Note that formant does not related to the pitch or frequency of the signal, but rather the timbre and spectrum peaks. 
+Each formant corresponds to a resonance in the vocal tract and are prominent in vowels.
 
 |                                     shift=0                                      |                                     shift=-1                                      |                                     shift=2                                      |
 | :------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
@@ -145,7 +151,8 @@ It can reduce unnecessary noise.
 
 {% tab parameters Ratio %}
 
-설명
+**Ratio** refers to the ratio between modulator and carrier signal as follows: $modulator^ratio * carrier$
+The smaller ratio means the weaker modulator signal and vice versa.
 
 |                                ratio=0.3                                     |                                   ratio=0.7                                      |                                   ratio=1.2                                      |
 | :--------------------------------------------------------------------------: | :------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
