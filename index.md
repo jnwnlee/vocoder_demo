@@ -4,18 +4,23 @@ layout: default
 
 Introduction
 
-
 ## Vocoder Implementation
 
-Method Explanation & Figure
+![Implementation of Vocoder](/assets/images/vocoder.png "Figure.1 Implementation of Vocoder")
+Vocoder takes two different signals, carrier $car$ and modulator $mod$, as inputs and outputs one result signal $output$.
+Let the number of frequency bands $N$, the number of time samples $T$.
+Each bandpass filter $bandpass_i, i\in [1, N]$ corresponding to a single frequency band has passband $[f_{i-1}, f_i]$.
+The output signal is retreived as the following: $$output_t=ISTFT(\Sigma_{i\in [1, N]}{RMS(bandpass_i(mod_t))\times bandpass_i(STFT(car)_t)}), t\in[0, T]$$.
+RMS and STFT is calculated in a same hop length.
 
+As a result, we can retreive a modified carrier signal that has the same envelope with modulator signal in frequency domain over time which reflects the formant characteristics of the modulator.
+!!!!!!!! TODO: Spectrogram example (carrier, modulator, result) !!!!!!!!
 
 ## Result Samples
 
-|Modulator|Carrier|Vocoded Result|
-|---|---|---|
-|<audio src="public/audios/sources/suzanne.wav" controls></audio>|<audio src="public/audios/carriers/sawtooth.wav" controls></audio>|<audio src="public/audios/results/suzanne_result.wav" controls></audio>|
-
+| Modulator                                                        | Carrier                                                            | Vocoded Result                                                          |
+| ---------------------------------------------------------------- | ------------------------------------------------------------------ | ----------------------------------------------------------------------- |
+| <audio src="public/audios/sources/suzanne.wav" controls></audio> | <audio src="public/audios/carriers/sawtooth.wav" controls></audio> | <audio src="public/audios/results/suzanne_result.wav" controls></audio> |
 
 ### Controllable Parameters
 
@@ -25,84 +30,86 @@ Method Explanation & Figure
 
 설명
 
-|f0=220|f0=440|f0=880|
-|:---:|:---:|:---:|
-|<audio src="public/audios/results/f0/suzanne_220.wav" controls></audio>|<audio src="public/audios/results/f0/suzanne_440.wav" controls></audio>|<audio src="public/audios/results/f0/suzanne_880.wav" controls></audio>|
-{% endtab %}
+|                                 f0=220                                  |                                 f0=440                                  |                                 f0=880                                  |
+| :---------------------------------------------------------------------: | :---------------------------------------------------------------------: | :---------------------------------------------------------------------: |
+| <audio src="public/audios/results/f0/suzanne_220.wav" controls></audio> | <audio src="public/audios/results/f0/suzanne_440.wav" controls></audio> | <audio src="public/audios/results/f0/suzanne_880.wav" controls></audio> |
 
+{% endtab %}
 
 {% tab parameters f Bands %}
 
 Frequency Band 설명
 
+|                                  band_num=10                                  |                                  band_num=60                                  |                                  band_num=120                                  |
+| :---------------------------------------------------------------------------: | :---------------------------------------------------------------------------: | :----------------------------------------------------------------------------: |
+| <audio src="public/audios/results/freq_band/suzanne_10.wav" controls></audio> | <audio src="public/audios/results/freq_band/suzanne_60.wav" controls></audio> | <audio src="public/audios/results/freq_band/suzanne_120.wav" controls></audio> |
 
-|band_num=10|band_num=60|band_num=120|
-|:---:|:---:|:---:|
-|<audio src="public/audios/results/freq_band/suzanne_10.wav" controls></audio>|<audio src="public/audios/results/freq_band/suzanne_60.wav" controls></audio>|<audio src="public/audios/results/freq_band/suzanne_120.wav" controls></audio>|
 {% endtab %}
-
 
 {% tab parameters F Scale %}
 
-Frequency Scale 설명
+While dividing equal-width Frequency Bands, either linear or mel(log) scale can be applied on frequency axis.
+It determines the range of each frequency band, which is important to human pitch perception and formant shift.
 
+|                                 Linear Spectrogram                                 |                                 Mel Spectrogram                                 |
+| :--------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------: |
+| <audio src="public/audios/results/freq_scale/suzanne_linear.wav" controls></audio> | <audio src="public/audios/results/freq_scale/suzanne_mel.wav" controls></audio> |
 
-|Linear Spectrogram|Mel Spectrogram|
-|:---:|:---:|
-|<audio src="public/audios/results/freq_scale/suzanne_linear.wav" controls></audio>|<audio src="public/audios/results/freq_scale/suzanne_mel.wav" controls></audio>|
 {% endtab %}
-
 
 {% tab parameters Noise %}
 
-설명
+To highlight sibilant sounds (e.g. _s, sh, t, ch, chh_, etc.), high frequency random noise can be added to the carrier signal.
+As these sounds do not have particular pitch, adding frequency components around 8kHz to 16kHz may help them to stand out.
+For implementation, we generated a random white noise and applied bi-quad high-pass filter.
+_amp_ is the amplitude of noise. _Q_ is the Q value of bi-quad filter.
 
+|                                without Noise                                 |                                   amp=0.5, Q=1                                   |                                   amp=0.7, Q=3                                   |
+| :--------------------------------------------------------------------------: | :------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
+| <audio src="public/audios/results/noise/suzanne_basic.wav" controls></audio> | <audio src="public/audios/results/noise/suzanne_amp0.5_Q1.wav" controls></audio> | <audio src="public/audios/results/noise/suzanne_amp0.7_Q3.wav" controls></audio> |
 
-|without Noise|amp=0.5, Q=1|amp=0.7, Q=3|
-|:---:|:---:|:---:|
-|<audio src="public/audios/results/noise/suzanne_basic.wav" controls></audio>|<audio src="public/audios/results/noise/suzanne_amp0.5_Q1.wav" controls></audio>|<audio src="public/audios/results/noise/suzanne_amp0.7_Q3.wav" controls></audio>|
 {% endtab %}
-
 
 {% tab parameters Formant %}
 
 설명
 
-|shift=0|shift=-1|shift=2|
-|:---:|:---:|:---:|
-|<audio src="public/audios/results/formant_shift/suzanne_0.wav" controls></audio>|<audio src="public/audios/results/formant_shift/suzanne_-1.wav" controls></audio>|<audio src="public/audios/results/formant_shift/suzanne_2.wav" controls></audio>|
-{% endtab %}
+|                                     shift=0                                      |                                     shift=-1                                      |                                     shift=2                                      |
+| :------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
+| <audio src="public/audios/results/formant_shift/suzanne_0.wav" controls></audio> | <audio src="public/audios/results/formant_shift/suzanne_-1.wav" controls></audio> | <audio src="public/audios/results/formant_shift/suzanne_2.wav" controls></audio> |
 
+{% endtab %}
 
 {% tab parameters Compressor %}
 
-설명
+Compressor attenuates the given sound above threshold (dB) with a certain ratio (>1) while maintaining the maximum amplitude level (dB).
+It reduces the dynamic range without clipping.
+Applying the effector before vocoder softens the dynamic change in formant.
 
-|without Compressor|with Compressor|
-|:---:|:---:|
-|<audio src="public/audios/results/comp&expd/suzanne_basic.wav" controls></audio>|<audio src="public/audios/results/freq_scale/suzanne_comp.wav" controls></audio>|
+|                                without Compressor                                |                                 with Compressor                                  |
+| :------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
+| <audio src="public/audios/results/comp&expd/suzanne_basic.wav" controls></audio> | <audio src="public/audios/results/freq_scale/suzanne_comp.wav" controls></audio> |
+
 {% endtab %}
-
 
 {% tab parameters Expander %}
 
-설명
+Expander, in contrast to compressor, attenuates the given sound below threshold (dB) with a certain ratio (>1).
+It can reduce unnecessary noise.
 
-|without Expander|with Expander|
-|:---:|:---:|
-|<audio src="public/audios/results/comp&expd/suzanne_basic.wav" controls></audio>|<audio src="public/audios/results/freq_scale/suzanne_expd.wav" controls></audio>|
+|                                 without Expander                                 |                                  with Expander                                   |
+| :------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
+| <audio src="public/audios/results/comp&expd/suzanne_basic.wav" controls></audio> | <audio src="public/audios/results/freq_scale/suzanne_expd.wav" controls></audio> |
+
 {% endtab %}
 
-
 {% endtabs %}
-
 
 ### Various Carrier Samples
 
 #### 1. Suzanne
 
 <audio src="public/audios/sources/suzanne.wav" controls></audio>
-
 
 <table>
     <tr>
@@ -132,10 +139,9 @@ Frequency Scale 설명
     </tr>
 </table>
 
-
 #### 2. Dog Sound
-<audio src="public/audios/sources/dog_sound.wav" controls></audio>
 
+<audio src="public/audios/sources/dog_sound.wav" controls></audio>
 
 <table>
     <tr>
@@ -183,6 +189,3 @@ Frequency Scale 설명
 ## Mimicking Artists
 
 아티스트별
-
-
-
