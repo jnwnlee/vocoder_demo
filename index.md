@@ -6,14 +6,28 @@ Introduction
 
 ## Vocoder Implementation
 
-![Implementation of Vocoder](/assets/images/vocoder.png "Figure.1 Implementation of Vocoder")
-Vocoder takes two different signals, carrier $car$ and modulator $mod$, as inputs and outputs one result signal $output$.
-Let the number of frequency bands $N$, the number of time samples $T$.
-Each bandpass filter $bandpass_i, i\in [1, N]$ corresponding to a single frequency band has passband $[f_{i-1}, f_i]$.
-The output signal is retreived as the following: $$output_t=ISTFT(\Sigma_{i\in [1, N]}{RMS(bandpass_i(mod_t))\times bandpass_i(STFT(car)_t)}), t\in[0, T]$$.
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+  },
+  svg: {
+    fontCache: 'global'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+
+![Implementation of Vocoder](/assets/images/vocoder.png)  
+Vocoder takes two different signals, carrier $car$ and modulator $mod$, as inputs and outputs one result signal $output$.  
+Let the number of frequency bands $N$, the number of time samples $T$.  
+Each bandpass filter $bandpass_i, i\in [1, N]$ corresponding to a single frequency band has passband $[f_{i-1}, f_i]$.  
+The output signal is retreived as the following: $$output_t=ISTFT(\Sigma_{i\in [1, N]}{RMS(bandpass_i(mod_t))\times bandpass_i(STFT(car)_t)}), t\in[0, T]$$.  
 RMS and STFT is calculated in a same hop length.
 
-As a result, we can retreive a modified carrier signal that has the same envelope with modulator signal in frequency domain over time which reflects the formant characteristics of the modulator.
+As a result, we can retreive a modified carrier signal that has the same envelope with modulator signal in frequency domain over time which reflects the formant characteristics of the modulator.  
 !!!!!!!! TODO: Spectrogram example (carrier, modulator, result) !!!!!!!!
 
 ## Result Samples
@@ -48,7 +62,7 @@ Frequency Band 설명
 
 {% tab parameters F Scale %}
 
-While dividing equal-width Frequency Bands, either linear or mel(log) scale can be applied on frequency axis.
+While dividing equal-width Frequency Bands, either linear or mel(log) scale can be applied on frequency axis.  
 It determines the range of each frequency band, which is important to human pitch perception and formant shift.
 
 |                                 Linear Spectrogram                                 |                                 Mel Spectrogram                                 |
@@ -60,7 +74,7 @@ It determines the range of each frequency band, which is important to human pitc
 {% tab parameters Noise %}
 
 To highlight sibilant sounds (e.g. _s, sh, t, ch, chh_, etc.), high frequency random noise can be added to the carrier signal.
-As these sounds do not have particular pitch, adding frequency components around 8kHz to 16kHz may help them to stand out.
+As these sounds do not have particular pitch, adding frequency components around 8kHz to 16kHz may help them to stand out.  
 For implementation, we generated a random white noise and applied bi-quad high-pass filter.
 _amp_ is the amplitude of noise. _Q_ is the Q value of bi-quad filter.
 
@@ -83,7 +97,7 @@ _amp_ is the amplitude of noise. _Q_ is the Q value of bi-quad filter.
 {% tab parameters Compressor %}
 
 Compressor attenuates the given sound above threshold (dB) with a certain ratio (>1) while maintaining the maximum amplitude level (dB).
-It reduces the dynamic range without clipping.
+It reduces the dynamic range without clipping.  
 Applying the effector before vocoder softens the dynamic change in formant.
 
 |                                without Compressor                                |                                 with Compressor                                  |
