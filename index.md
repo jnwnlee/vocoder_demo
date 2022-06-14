@@ -2,11 +2,30 @@
 layout: default
 ---
 
-Introduction
+
+Demo for the final project of *KAIST GCT535 Spring 2022 Sound Technology for Multimedia*.
+
+We constructed our own **Vocoder Effect and related parameters to mimick several iconic vocoder-effected vocal tracks** which are Daftpunk, Zedd and Stevie Wonder.
+
+
+
+First, we implemented a [classic channel vocoder](TODO: link!) using band-pass filters and RMS filters.
+
+Second, we implemented and compared controllable parameters include 
+[F0](https://en.wikipedia.org/wiki/Fundamental_frequency), 
+Number of Frequency Bands, Frequency Scale, Random Noising, Formant Shifting and Ratio between modulator and carrier. 
+We also implemented compressor and expander to improve the effector sound. (TODO: 여기 가독성 구림)
+
+Finally, we mimicked the target artists using the our implemented vocoder and its parameters.
+Additionally, we checked interesting results with various type of carrier sounds.
+
+You can check [implementation detail](#vocoder-implementation) and [result samples](#result-samples) below.
+
+
 
 ## Vocoder Implementation
 
-![Implementation of Vocoder](/assets/images/vocoder.png "Figure.1 Implementation of Vocoder")
+![Implementation of Vocoder](public/images/vocoder.png "Figure.1 Implementation of Vocoder")
 Vocoder takes two different signals, carrier $car$ and modulator $mod$, as inputs and outputs one result signal $output$.
 Let the number of frequency bands $N$, the number of time samples $T$.
 Each bandpass filter $bandpass_i, i\in [1, N]$ corresponding to a single frequency band has passband $[f_{i-1}, f_i]$.
@@ -22,13 +41,19 @@ As a result, we can retreive a modified carrier signal that has the same envelop
 | ---------------------------------------------------------------- | ------------------------------------------------------------------ | ----------------------------------------------------------------------- |
 | <audio src="public/audios/sources/suzanne.wav" controls></audio> | <audio src="public/audios/carriers/sawtooth.wav" controls></audio> | <audio src="public/audios/results/suzanne_result.wav" controls></audio> |
 
+<br>
+
+---
+
+
 ### Controllable Parameters
 
 {% tabs parameters %}
 
 {% tab parameters F0 %}
 
-설명
+The fundamental frequency, often referred to simply as F0, is the lowest frequency of a periodic signal. In music, pitch is the fundamental frequency of a note
+Since the carrier sound has only charge with the harmonic, the result's pitch is controlled by F0 value of the carrier signal.
 
 |                                 f0=220                                  |                                 f0=440                                  |                                 f0=880                                  |
 | :---------------------------------------------------------------------: | :---------------------------------------------------------------------: | :---------------------------------------------------------------------: |
@@ -46,7 +71,7 @@ Frequency Band 설명
 
 {% endtab %}
 
-{% tab parameters F Scale %}
+{% tab parameters Scale %}
 
 While dividing equal-width Frequency Bands, either linear or mel(log) scale can be applied on frequency axis.
 It determines the range of each frequency band, which is important to human pitch perception and formant shift.
@@ -88,7 +113,7 @@ Applying the effector before vocoder softens the dynamic change in formant.
 
 |                                without Compressor                                |                                 with Compressor                                  |
 | :------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
-| <audio src="public/audios/results/comp&expd/suzanne_basic.wav" controls></audio> | <audio src="public/audios/results/freq_scale/suzanne_comp.wav" controls></audio> |
+| <audio src="public/audios/results/comp&expd/suzanne_basic.wav" controls></audio> | <audio src="public/audios/results/comp&expd/suzanne_comp.wav" controls></audio> |
 
 {% endtab %}
 
@@ -99,11 +124,28 @@ It can reduce unnecessary noise.
 
 |                                 without Expander                                 |                                  with Expander                                   |
 | :------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
-| <audio src="public/audios/results/comp&expd/suzanne_basic.wav" controls></audio> | <audio src="public/audios/results/freq_scale/suzanne_expd.wav" controls></audio> |
+| <audio src="public/audios/results/comp&expd/suzanne_basic.wav" controls></audio> | <audio src="public/audios/results/comp&expd/suzanne_expd.wav" controls></audio> |
 
 {% endtab %}
 
+
+{% tab parameters Ratio %}
+
+설명
+
+|                                ratio=0.3                                     |                                   ratio=0.7                                      |                                   ratio=1.2                                      |
+| :--------------------------------------------------------------------------: | :------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
+| <audio src="public/audios/results/beta/suzanne_0.3.wav" controls></audio> | <audio src="public/audios/results/beta/suzanne_0.7.wav" controls></audio> | <audio src="public/audios/results/beta/suzanne_1.2.wav" controls></audio> |
+
+{% endtab %}
+
+
 {% endtabs %}
+
+<br>
+
+---
+
 
 ### Various Carrier Samples
 
@@ -185,6 +227,9 @@ It can reduce unnecessary noise.
         <td><audio src="public/audios/results/carriers/dog_sound_trumpet.wav" controls></audio></td>
     </tr>
 </table>
+
+<br>
+
 
 ## Mimicking Artists
 
