@@ -2,7 +2,7 @@ title: Mimicking Vocal Tracks by Implementing and Applying Vocoder Effect
 description: Junwon Lee, Yoonjin Chung
 show_downloads: false
 url: "https://yoonjinxd.github.io"
-baseurl: "/vocoder_demo/"
+baseurl: "/vocoder_demo"
 darkmode: false
 remote_theme: tuur29/pages-themes-cayman
 color:
@@ -29,5 +29,3 @@ plugins:
   - jekyll-seo-tag
   - jekyll-tabs
   - jekyll-remote-theme
-assets:
-  - "*"
