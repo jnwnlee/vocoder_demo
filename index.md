@@ -10,11 +10,11 @@ Introduction
 Vocoder takes two different signals, carrier $car$ and modulator $mod$, as inputs and outputs one result signal $output$.
 Let the number of frequency bands $N$, the number of time samples $T$.
 Each bandpass filter $bandpass_i, i\in [1, N]$ corresponding to a single frequency band has passband $[f_{i-1}, f_i]$.
-The output signal is retreived as the following: $$output_t=\Sigma_{i\in [1, N]}{RMS(bandpass_i(mod_t))\times bandpass_i(STFT(car)_t)}, t\in[0, T]$$.
+The output signal is retreived as the following: $$output_t=ISTFT(\Sigma_{i\in [1, N]}{RMS(bandpass_i(mod_t))\times bandpass_i(STFT(car)_t)}), t\in[0, T]$$.
 RMS and STFT is calculated in a same hop length.
 
 As a result, we can retreive a modified carrier signal that has the same envelope with modulator signal in frequency domain over time which reflects the formant characteristics of the modulator.
-!!!!!!!! TODO: STFT example (carrier, modulator, result) !!!!!!!!
+!!!!!!!! TODO: Spectrogram example (carrier, modulator, result) !!!!!!!!
 
 ## Result Samples
 
