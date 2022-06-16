@@ -51,7 +51,7 @@ A vocoder takes two different signals, carrier $car$ and modulator $mod$, as inp
 Each bandpass filter $bandpass_i, i\in [1, N]$ corresponding to a single frequency band has passband $[f_{i-1}, f_i]$. 
 The output signal is retrieved as the following: 
 
-$$output_t=ISTFT(\Sigma_{i\in [1, N]}{RMS(bandpass_i(mod_t))\times bandpass_i(STFT(car)_t)}), t\in[0, T]$$.  
+$$output_t=ISTFT(\Sigma_{i\in [1, N]}{RMS(bandpass_i(mod_t))\times bandpass_i(STFT(car_t))}), t\in[0, T]$$.  
 
 
 RMS and STFT are calculated in the same hop length.
@@ -195,10 +195,11 @@ It can reduce unnecessary noise.
 {% endtab %}
 
 
-{% tab parameters Ratio %}
+{% tab parameters Beta %}
 
-**Ratio** refers to the ratio between modulator and carrier signal as follows: ${modulator}^{ratio} * carrier$
-The smaller ratio means the weaker modulator signal and vice versa.
+**Beta** refers to the non-linear alternation of modulator signal as follows: ${modulator}^{beta} * carrier$
+This parameter was devised to control the artifact of modulator signal.
+
 
 |                                ratio=0.3                                     |                                   ratio=0.7                                      |                                   ratio=1.2                                      |
 | :--------------------------------------------------------------------------: | :------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
