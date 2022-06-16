@@ -58,12 +58,14 @@ RMS and STFT are calculated in the same hop length.
 
 As a result, we can retrieve a modified carrier signal that has the same envelope as the modulator signal in the frequency domain over time which reflects the formant characteristics of the modulator.  
 
+<br>
 
 <p>
     <img src="public/images/compare_stft.png" alt>
     <em>Figure.2 Comparison between original STFT and vocoded STFT</em>
 </p>
 
+<br>
 
 ## Result Samples
 
