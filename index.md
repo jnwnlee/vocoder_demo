@@ -219,6 +219,9 @@ This parameter was devised to control the artifact of modulator signal.
 
 ### Various Carrier Samples
 
+We applied various types of carrier sounds to the two modulator, _suzanne_ and _dog sound_. 
+Check the below samples focusing on how the sound is modulated following the carrier's texture or harmonic structure.
+
 #### 1. Suzanne
 
 <audio src="public/audios/sources/suzanne.wav" controls></audio>
@@ -262,6 +265,11 @@ This parameter was devised to control the artifact of modulator signal.
         <th>Vocoded Result</th>
     </tr>
     <tr>
+        <td>Incremental Sawtooth</td>
+        <td><audio src="public/audios/carriers/exp_sawtooth.wav" controls></audio></td>
+        <td><audio src="public/audios/results/carriers/dog_sound_exp_sawtooth.wav" controls></audio></td>
+    </tr>
+    <tr>
         <td>Harp</td>
         <td><audio src="public/audios/carriers/harp.wav" controls></audio></td>
         <td><audio src="public/audios/results/carriers/dog_sound_harp.wav" controls></audio></td>
@@ -302,6 +310,10 @@ This parameter was devised to control the artifact of modulator signal.
 
 
 ## Let's Mimick Some Artists!
+
+We used sawtooth signals with static or dynamic fundamental frequency over time as a carrier sound. 
+By manipulating the controllable parameters of the vocoder, we finally got the resulting sound tracks.
+
 
 #### 1. Daftpunk - Harder, Better, Faster, Stronger
 
@@ -356,3 +368,6 @@ This parameter was devised to control the artifact of modulator signal.
         <td><audio src="public/audios/results/artist/Closetoyou_result+mr.wav" controls></audio></td>
     </tr>
 </table>
+
+
+<br>

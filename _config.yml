@@ -15,10 +15,14 @@ color:
 syntax_theme: https://stylishthemes.github.io/Syntax-Themes/pygments/css-github/pygments-monokai.css
 buttons:
   zip_url: https://github.com/YoonjinXD/vocoder_project
-  zip_title: Project Repository
+  zip_title: View Project
   zip_hide: false
   tar_hide: true
   github_hide: true
+github:
+  owner_name: "Yoonjin Chung"
+  repository_name: "vocoder_demo"
+  repository_url: "https://github.com/YoonjinXD/vocoder_demo"
 plugins:
   - jekyll-paginate
   - jekyll-sitemap

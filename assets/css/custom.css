@@ -17,6 +17,10 @@ img {
     border-radius: 5%;
 }
 
+h2 > a {
+    color: #ffffff;
+}
+
 .tab {
     display: flex;
     flex-wrap: wrap;
