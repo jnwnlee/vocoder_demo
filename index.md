@@ -11,7 +11,7 @@ We constructed our own **Vocoder Effect and related parameters to mimick several
 
 - First, we implemented a classic channel vocoder using band-pass filters and RMS filters.
 
-- Second, we implemented and compared controllable parameters including F0, Number of Frequency Bands, Frequency Scale, Random Noising, Formant Shifting and Ratio between modulator and carrier. 
+- Second, we implemented and compared controllable parameters including F0, Number of Frequency Bands, Frequency Scale, Random Noising, Formant Shifting and Beta between modulator and carrier. 
   We also implemented compressor and expander to improve the effector sound.
 
 - Finally, we mimicked the target artists using our implemented vocoder and its parameters.
