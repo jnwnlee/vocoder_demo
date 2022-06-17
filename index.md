@@ -2,24 +2,19 @@
 layout: default
 ---
 
-
 Demo for the final project of _[GCT535 Spring 2022 Sound Technology for Multimedia, KAIST](https://mac.kaist.ac.kr/~juhan/gct535/index.html)_.
 
 We constructed our own **Vocoder Effect and related parameters to mimick several iconic vocoder-effected vocal tracks** which are Daftpunk, Zedd and Stevie Wonder.
 
-
-
 - First, we implemented a classic channel vocoder using band-pass filters and RMS filters.
 
-- Second, we implemented and compared controllable parameters including F0, Number of Frequency Bands, Frequency Scale, Random Noising, Formant Shifting and Beta between modulator and carrier. 
+- Second, we implemented and compared controllable parameters including F0, Number of Frequency Bands, Frequency Scale, Random Noising, Formant Shifting and Beta between modulator and carrier.
   We also implemented compressor and expander to improve the effector sound.
 
 - Finally, we mimicked the target artists using our implemented vocoder and its parameters.
   We also generated interesting results with various types of carrier sounds.
 
 You can check [implementation detail](#vocoder-implementation) and [result samples](#result-samples) below.
-
-
 
 ## Vocoder Implementation
 
@@ -47,16 +42,15 @@ MathJax = {
 <br>
 
 A vocoder takes two different signals, carrier $car$ and modulator $mod$, as inputs and outputs one result signal $output$. Let the number of frequency bands $N$, the number of time samples $T$.
-  
-Each bandpass filter $bandpass_i, i\in [1, N]$ corresponding to a single frequency band has passband $[f_{i-1}, f_i]$. 
-The output signal is retrieved as the following: 
 
-$$output_t=ISTFT(\Sigma_{i\in [1, N]}{RMS(bandpass_i(mod_t))\times bandpass_i(STFT(car_t))}), t\in[0, T]$$.  
+Each bandpass filter $bandpass_i, i\in [1, N]$ corresponding to a single frequency band has passband $[f_{i-1}, f_i]$.
+The output signal is retrieved as the following:
 
+$$output_t=ISTFT(\Sigma_{i\in [1, N]}{RMS(bandpass_i(mod_t))\times bandpass_i(STFT(car_t))}), t\in[0, T]$$.
 
 RMS and STFT are calculated in the same hop length.
 
-As a result, we can retrieve a modified carrier signal that has the same envelope as the modulator signal in the frequency domain over time which reflects the formant characteristics of the modulator.  
+As a result, we can retrieve a modified carrier signal that has the same envelope as the modulator signal in the frequency domain over time which reflects the formant characteristics of the modulator.
 
 <br>
 
@@ -68,7 +62,6 @@ As a result, we can retrieve a modified carrier signal that has the same envelop
 <br>
 
 ## Result Samples
-
 
 <table>
     <tr>
@@ -99,12 +92,9 @@ As a result, we can retrieve a modified carrier signal that has the same envelop
     </tr>
 </table>
 
-
-
 <br>
 
 ---
-
 
 ### Controllable Parameters
 
@@ -123,8 +113,8 @@ Since the carrier sound is solely in charge of the harmonic, the result's pitch 
 
 {% tab parameters f Bands %}
 
-**F Bands** refers to the number of frequency bands into which the modulator signal is split. 
-The larger number of F Bands means the smaller range of band-pass filters, vice versa. 
+**F Bands** refers to the number of frequency bands into which the modulator signal is split.
+The larger number of F Bands means the smaller range of band-pass filters, vice versa.
 You can think of this number as a resolution of the modulator's formant.
 Check the samples focusing on the formant(vowels) resolution.
 
@@ -139,7 +129,7 @@ Check the samples focusing on the formant(vowels) resolution.
 Different **Scales**, such as linear or mel(log), can be applied on frequency axis when dividing equal-width Frequency Bands.
 It determines the range of each frequency band, which is important to human pitch perception and formant shift.
 
-|                                 Linear Spectrogram                                 |                                 Mel Spectrogram                                 |
+|                                    Linear Scale                                    |                                    Mel Scale                                    |
 | :--------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------: |
 | <audio src="public/audios/results/freq_scale/suzanne_linear.wav" controls></audio> | <audio src="public/audios/results/freq_scale/suzanne_mel.wav" controls></audio> |
 
@@ -147,12 +137,10 @@ It determines the range of each frequency band, which is important to human pitc
 
 {% tab parameters Noise %}
 
-
 To highlight sibilant sounds (e.g. _s, sh, t, ch, chh_, etc.), high-frequency **Noise** can be added to the carrier signal.
 As these sounds do not have a particular pitch, adding frequency components around 8kHz to 16kHz may help them to stand out.  
 For implementation, we generated a random white noise and applied a bi-quad high-pass filter.
 _amp_ is the amplitude of the noise. _Q_ is the Q value of the bi-quad filter.
-
 
 |                                without Noise                                 |                                   amp=0.5, Q=1                                   |                                   amp=0.7, Q=3                                   |
 | :--------------------------------------------------------------------------: | :------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
@@ -162,9 +150,9 @@ _amp_ is the amplitude of the noise. _Q_ is the Q value of the bi-quad filter.
 
 {% tab parameters Formant %}
 
-**Formant-shifting** is achieved by shifting the multiplication between the frequency band channels from modulator and carrier. 
+**Formant-shifting** is achieved by shifting the multiplication between the frequency band channels from modulator and carrier.
 If the shift step is 1, the modulator channel n would be mapped to the carrier channel n+1.
-Note that formant does not relate to the pitch or frequency of the signal, but rather the timbre and spectrum peaks. 
+Note that formant does not relate to the pitch or frequency of the signal, but rather the timbre and spectrum peaks.
 Each formant corresponds to a resonance in the vocal tract and is prominent in vowels.
 
 |                                     shift=0                                      |                                     shift=-1                                      |                                     shift=2                                      |
@@ -179,8 +167,8 @@ Each formant corresponds to a resonance in the vocal tract and is prominent in v
 It reduces the dynamic range without clipping.  
 Applying the effector before vocoder softens the dynamic change in formant.
 
-|                                without Compressor                                |                                 with Compressor                                  |
-| :------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
+|                                without Compressor                                |                                 with Compressor                                 |
+| :------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------: |
 | <audio src="public/audios/results/comp&expd/suzanne_basic.wav" controls></audio> | <audio src="public/audios/results/comp&expd/suzanne_comp.wav" controls></audio> |
 
 {% endtab %}
@@ -190,25 +178,22 @@ Applying the effector before vocoder softens the dynamic change in formant.
 **Expander**, in contrast to compressor, attenuates the given sound below threshold (dB) with a certain ratio (>1).
 It can reduce unnecessary noise.
 
-|                                 without Expander                                 |                                  with Expander                                   |
-| :------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
+|                                 without Expander                                 |                                  with Expander                                  |
+| :------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------: |
 | <audio src="public/audios/results/comp&expd/suzanne_basic.wav" controls></audio> | <audio src="public/audios/results/comp&expd/suzanne_expd.wav" controls></audio> |
 
 {% endtab %}
-
 
 {% tab parameters Beta %}
 
 **Beta** refers to the non-linear alternation of modulator signal as follows: ${modulator}^{beta} * carrier$
 This parameter was devised to control the artifact of modulator signal.
 
-
-|                                ratio=0.3                                     |                                   ratio=0.7                                      |                                   ratio=1.2                                      |
-| :--------------------------------------------------------------------------: | :------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
+|                                 ratio=0.3                                 |                                 ratio=0.7                                 |                                 ratio=1.2                                 |
+| :-----------------------------------------------------------------------: | :-----------------------------------------------------------------------: | :-----------------------------------------------------------------------: |
 | <audio src="public/audios/results/beta/suzanne_0.3.wav" controls></audio> | <audio src="public/audios/results/beta/suzanne_0.7.wav" controls></audio> | <audio src="public/audios/results/beta/suzanne_1.2.wav" controls></audio> |
 
 {% endtab %}
-
 
 {% endtabs %}
 
@@ -216,10 +201,9 @@ This parameter was devised to control the artifact of modulator signal.
 
 ---
 
-
 ### Various Carrier Samples
 
-We applied various types of carrier sounds to the two modulator, _suzanne_ and _dog sound_. 
+We applied various types of carrier sounds to the two modulator, _suzanne_ and _dog sound_.
 Check the below samples focusing on how the sound is modulated following the carrier's texture or harmonic structure.
 
 #### 1. Suzanne
@@ -308,12 +292,10 @@ Check the below samples focusing on how the sound is modulated following the car
 
 <br>
 
-
 ## Let's Mimick Some Artists!
 
-We used sawtooth signals with static or dynamic fundamental frequency over time as a carrier sound. 
+We used sawtooth signals with static or dynamic fundamental frequency over time as a carrier sound.
 By manipulating the controllable parameters of the vocoder, we finally got the resulting sound tracks.
-
 
 #### 1. Daftpunk - Harder, Better, Faster, Stronger
 
@@ -368,6 +350,5 @@ By manipulating the controllable parameters of the vocoder, we finally got the r
         <td><audio src="public/audios/results/artist/Closetoyou_result+mr.wav" controls></audio></td>
     </tr>
 </table>
-
 
 <br>
